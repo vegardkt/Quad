@@ -9,7 +9,7 @@ double temp;
 long a_x, a_y, a_z, a_tot;
 long timer;
 bool firstcalc;
-
+//Just testing GitKraken
 
 void setup() {
   //1. Start I2C
