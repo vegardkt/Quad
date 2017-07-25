@@ -24,7 +24,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Starting main loop");
   read_mpu();
   //Raw values return in range [-32768,32768]
   //Actual measurements are in [-500,500] deg/s
@@ -78,7 +77,6 @@ if(abs(a_x) < a_tot)
 
 void read_mpu()
 {
-  Serial.println("Reading mpu");
   //SDA = A4, SCL = A5
   Wire.beginTransmission(0x68);
   Wire.write(0x3B);
@@ -92,7 +90,6 @@ void read_mpu()
   g_x = Wire.read()<<8|Wire.read();
   g_y = Wire.read()<<8|Wire.read();
   g_z = Wire.read()<<8|Wire.read();
-  Serial.println("Done Reading mpu");
 }
 
 void register_write()
@@ -128,14 +125,13 @@ void register_write()
   Wire.endTransmission();
   Serial.println("|  Gyroscope Configured   |");
   Serial.println("|-------------------------|");
-  Serial.println("register_write complete");
 }
 
 void get_offset()
 {
-  Serial.println("Starting get_offset");
   for(int i = 0; i < 2000;i++)
   {
+    Serial.println(i);
     read_mpu();
     g_x_off += g_x;
     g_y_off += g_y;

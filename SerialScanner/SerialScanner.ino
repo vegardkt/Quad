@@ -24,10 +24,9 @@ void loop()
     // The i2c_scanner uses the return value of
     // the Write.endTransmisstion to see if
     // a device did acknowledge to the address.
+    Serial.println(address);
     Wire.beginTransmission(address);
-    Serial.println("ending transmission");
     error = Wire.endTransmission();
-    Serial.println("Transmission ended");
     if (error == 0)
     {
       Serial.print("I2C device found at address 0x");
