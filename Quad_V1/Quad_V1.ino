@@ -51,7 +51,6 @@ if(abs(a_x) < a_tot)
 {
   aroll = asin((float)a_x/a_tot) * -57.296;
 }
-  Serial.print(apitch);
   //substrace gyro offset
   g_x = g_x - g_x_off;
   g_y = g_y - g_y_off;
@@ -72,29 +71,27 @@ if(abs(a_x) < a_tot)
   //Need to take YAW into acount for roll & pitch values!
   pitch -= roll * (sin(g_z * 0.000001066)); //Arduino sin is in rad! 1deg = 0.0174533 rad.
   roll += pitch * (sin(g_z * 0.000001066)); //And 0.0000611 * 0.0174533 = 0.00000106639
-  Serial.print(";");
-  Serial.print(pitch);
+
   pitch = (pitch * 0.98) + (apitch * 0.02);
   roll  = (roll  * 0.98 + aroll  * 0.02);
-  Serial.print(";");
-  Serial.println(pitch);
  
-  Serial.print(ch1_input);
-  Serial.print("|---|");
-  Serial.print(ch2_input);
-  Serial.print("|---|");
-  Serial.print(ch3_input);
-  Serial.print("|---|");
-  Serial.println(ch4_input);
+  //Serial.print(ch1_input); //Roll
+  //Serial.print("|---|");
+  //Serial.print(ch2_input); //Pitch
+  //Serial.print("|---|");
+  Serial.println(ch3_input);//Throttle
+  //Serial.print("|---|");
+  //Serial.println(ch4_input); //Yaw
   
 
-  if(micros() - timer > 4000)Serial.print("WARNING EXCEEDING 4000us CALCULATIONS ARE OFF!");
+  //if(micros() - timer > 4000)Serial.print("WARNING EXCEEDING 4000us CALCULATIONS ARE OFF!");
+  //Serial.println(micros() - timer);
   while(micros() - timer < 4000);
   timer = micros();
-  esc1 = ch1_input; //For testing only!
-  esc2 = ch2_input; //For testing only!
+  esc1 = ch3_input; //For testing only! 
+  esc2 = ch3_input; //For testing only!
   esc3 = ch3_input; //For testing only!
-  esc4 = ch4_input; //For testing only!
+  esc4 = ch3_input; //For testing only!
   
   PORTD |= B11110000; //set DO 4,5,6,7 high.
   t_esc1 = esc1 + timer; 
