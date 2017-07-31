@@ -39,7 +39,6 @@ if(abs(a_x) < a_tot)
 {
   aroll = asin((float)a_x/a_tot) * -57.296;
 }
-  Serial.print(apitch);
   //substrace gyro offset
   g_x = g_x - g_x_off;
   g_y = g_y - g_y_off;
@@ -60,12 +59,12 @@ if(abs(a_x) < a_tot)
   //Need to take YAW into acount for roll & pitch values!
   pitch -= roll * (sin(g_z * 0.000001066)); //Arduino sin is in rad! 1deg = 0.0174533 rad.
   roll += pitch * (sin(g_z * 0.000001066)); //And 0.0000611 * 0.0174533 = 0.00000106639
-  Serial.print(";");
-  Serial.print(pitch);
+
   pitch = (pitch * 0.98) + (apitch * 0.02);
   roll  = (roll  * 0.98 + aroll  * 0.02);
+  Serial.print(pitch);
   Serial.print(";");
-  Serial.println(pitch);
+  Serial.println(roll);
  
   
   
@@ -129,9 +128,9 @@ void register_write()
 
 void get_offset()
 {
+  Serial.println("Getting offset values");
   for(int i = 0; i < 2000;i++)
   {
-    Serial.println(i);
     read_mpu();
     g_x_off += g_x;
     g_y_off += g_y;
